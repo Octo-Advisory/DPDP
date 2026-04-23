@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/dpdp_compliance/DPDP/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dpdp</title>
+    <script type="module" crossorigin src="/assets/dpdp_compliance/DPDP/assets/index-CMMxI7Qq.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/dpdp_compliance/DPDP/assets/index-DFO9p2vT.css">
+  </head>
+  <body>
+    <div id="root"></div>
+		<script>
+			window.csrf_token = '{{ frappe.session.csrf_token }}';
+			if (window.csrf_token === '{{ frappe.session.csrf_token }}') {
+				window.csrf_token = '';
+			}
+			// TODO: load boot data here (context file is created in `www` directory)
+		</script>
+  </body>
+</html>

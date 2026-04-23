@@ -1,0 +1,236 @@
+[
+  {
+    "name": "1kpldsns5o",
+    "text": "How does your organisation primarily interact with personal data?",
+    "options": "[\"A. We determine both the purpose and means of processing\",\"B. We process data strictly on instructions from another entity\",\"C. We do both, depending on the context\",\"D. We are unsure / not formally classified\"]",
+    "section_link": "5a22haa4qh",
+    "weight": 1,
+    "order": 1,
+    "type": "Factual"
+  },
+  {
+    "name": "1kq27urnuh",
+    "text": "Does your organisation process personal data of children (individuals below 18 years)?",
+    "options": "[\"A. Yes, as a core part of our business\",\"B. Yes, incidentally\",\"C. No\",\"D. Unsure\"]",
+    "section_link": "5a22haa4qh",
+    "weight": 1,
+    "order": 3,
+    "type": "Factual"
+  },
+  {
+    "name": "1kqmda9ij1",
+    "text": "Does your organisation process digital personal data of individuals located in India?",
+    "options": "[\"A. Yes, exclusively\",\"B. Yes, along with data of individuals outside India\",\"C. No\",\"D. Unsure\"]",
+    "section_link": "5a22haa4qh",
+    "weight": 1,
+    "order": 2,
+    "type": "Factual"
+  },
+  {
+    "name": "1krp122ap1",
+    "text": "How clearly does your organisation define and communicate the specific purpose for which personal data is collected?",
+    "options": "[]",
+    "section_link": "5a633f8egp",
+    "weight": 1,
+    "order": 4,
+    "type": "Scale"
+  },
+  {
+    "name": "1ks0dgp562",
+    "text": "How effectively does your consent mechanism ensure that consent is free, specific, informed, and unambiguous, rather than bundled or implied?",
+    "options": "[]",
+    "section_link": "5a633f8egp",
+    "weight": 1,
+    "order": 5,
+    "type": "Scale"
+  },
+  {
+    "name": "1ksoh4nuub",
+    "text": "How easy is it for a Data Principal to withdraw consent, compared to the ease with which consent was given?",
+    "options": "[]",
+    "section_link": "5a633f8egp",
+    "weight": 1,
+    "order": 6,
+    "type": "Scale"
+  },
+  {
+    "name": "1ktrleps3i",
+    "text": "To what extent can your organisation prove, with records or logs, that valid consent was obtained for each processing activity?",
+    "options": "[]",
+    "section_link": "5a633f8egp",
+    "weight": 1,
+    "order": 7,
+    "type": "Scale"
+  },
+  {
+    "name": "1ku4e3pkr6",
+    "text": "How well defined are retention periods for different categories of personal data based on purpose and legal requirements?",
+    "options": "[]",
+    "section_link": "5abtb7amf0",
+    "weight": 1,
+    "order": 8,
+    "type": "Scale"
+  },
+  {
+    "name": "1kukd8hp33",
+    "text": "How reliably does your organisation erase or anonymise personal data once the specified purpose is fulfilled or consent is withdrawn?",
+    "options": "[]",
+    "section_link": "5abtb7amf0",
+    "weight": 1,
+    "order": 9,
+    "type": "Scale"
+  },
+  {
+    "name": "1kv2bfdbgl",
+    "text": "How effectively are your Data Processors (vendors, cloud providers) contractually and operationally required to follow the same deletion and retention rules?",
+    "options": "[]",
+    "section_link": "5abtb7amf0",
+    "weight": 1,
+    "order": 10,
+    "type": "Scale"
+  },
+  {
+    "name": "1l06lqj1pq",
+    "text": "How robust are the technical and organisational safeguards implemented to prevent unauthorised access, loss, or misuse of personal data?",
+    "options": "[]",
+    "section_link": "5aejbfhc1n",
+    "weight": 1,
+    "order": 11,
+    "type": "Scale"
+  },
+  {
+    "name": "1l091me31k",
+    "text": "How prepared is your organisation to detect, assess, and respond to a personal data breach in a time-bound and structured manner?",
+    "options": "[]",
+    "section_link": "5aejbfhc1n",
+    "weight": 1,
+    "order": 12,
+    "type": "Scale"
+  },
+  {
+    "name": "1l1ve938qr",
+    "text": "How clearly defined and tested is your mechanism to notify the Data Protection Board and affected individuals in the event of a personal data breach?",
+    "options": "[]",
+    "section_link": "5aejbfhc1n",
+    "weight": 1,
+    "order": 13,
+    "type": "Scale"
+  },
+  {
+    "name": "1l24h6gmd4",
+    "text": "How reliably does your organisation verify the age of users before processing personal data of children?",
+    "options": "[]",
+    "section_link": "5ai8hjpn6f",
+    "weight": 1,
+    "order": 14,
+    "type": "Scale"
+  },
+  {
+    "name": "1l2hp6d11e",
+    "text": "How effective is your mechanism to obtain and validate verifiable parental or guardian consent?",
+    "options": "[]",
+    "section_link": "5ai8hjpn6f",
+    "weight": 1,
+    "order": 15,
+    "type": "Scale"
+  },
+  {
+    "name": "1l3m9evoqm",
+    "text": "To what extent does your organisation ensure that children are not subjected to tracking, behavioural monitoring, or targeted advertising?",
+    "options": "[]",
+    "section_link": "5ai8hjpn6f",
+    "weight": 1,
+    "order": 16,
+    "type": "Scale"
+  },
+  {
+    "name": "1l4555dfpj",
+    "text": "How effectively does your organisation support correction, updating, or erasure of personal data upon request?",
+    "options": "[]",
+    "section_link": "5amte6qcko",
+    "weight": 1,
+    "order": 18,
+    "type": "Scale"
+  },
+  {
+    "name": "1l4r1ll28a",
+    "text": "How easily can individuals request access to a summary of their personal data and processing activities?",
+    "options": "[]",
+    "section_link": "5amte6qcko",
+    "weight": 1,
+    "order": 17,
+    "type": "Scale"
+  },
+  {
+    "name": "1l56ohb0co",
+    "text": "How mature and responsive is your grievance redressal mechanism for privacy-related complaints?",
+    "options": "[]",
+    "section_link": "5amte6qcko",
+    "weight": 1,
+    "order": 19,
+    "type": "Scale"
+  },
+  {
+    "name": "1l6jmho6he",
+    "text": "How actively does senior management or the governing body oversee data protection risks and compliance?",
+    "options": "[]",
+    "section_link": "5api6gi8e7",
+    "weight": 1,
+    "order": 21,
+    "type": "Scale"
+  },
+  {
+    "name": "1l6kcjshlr",
+    "text": "Is there a formally designated individual or function responsible for DPDP compliance?",
+    "options": "[\"A. Yes, formally appointed and documented\",\"B. Yes, informally handled\",\"C. Responsibility is distributed without clarity\",\"D. No specific ownership\"]",
+    "section_link": "5api6gi8e7",
+    "weight": 1,
+    "order": 20,
+    "type": "Factual"
+  },
+  {
+    "name": "1l73224l7d",
+    "text": "How transparent and accessible is your organisation’s privacy notice and contact information for data protection queries?",
+    "options": "[]",
+    "section_link": "5api6gi8e7",
+    "weight": 1,
+    "order": 22,
+    "type": "Scale"
+  },
+  {
+    "name": "1l8eijeats",
+    "text": "If applicable, how effectively are additional SDF obligations (DPO appointment, DPIA, audits) implemented?",
+    "options": "[]",
+    "section_link": "5at9egh32r",
+    "weight": 1,
+    "order": 24,
+    "type": "Scale"
+  },
+  {
+    "name": "1l8ia79as8",
+    "text": "Has your organisation assessed whether it may qualify as a Significant Data Fiduciary?",
+    "options": "[\"A. Yes, formally assessed\",\"B. Informally considered\",\"C. Not assessed\",\"D. Unsure\"]",
+    "section_link": "5at9egh32r",
+    "weight": 1,
+    "order": 23,
+    "type": "Factual"
+  },
+  {
+    "name": "1l92jque46",
+    "text": "Where is personal data primarily stored or processed?",
+    "options": "[\"A. India only\",\"B. India and permitted foreign jurisdictions\",\"C. Outside India\",\"D. Unsure\"]",
+    "section_link": "5b0q076a5k",
+    "weight": 1,
+    "order": 25,
+    "type": "Factual"
+  },
+  {
+    "name": "1la8ngn3ar",
+    "text": "Does your organisation rely on any statutory exemptions under the DPDP Act?",
+    "options": "[\"A. Yes\",\"B. No\",\"C. Unsure\"]",
+    "section_link": "5b0q076a5k",
+    "weight": 1,
+    "order": 26,
+    "type": "Factual"
+  }
+]

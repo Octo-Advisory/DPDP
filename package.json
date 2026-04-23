@@ -1,0 +1,15 @@
+{
+  "name": "dpdp_compliance",
+  "version": "1.0.0",
+  "description": "DPDP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd DPDP && yarn install",
+    "dev": "cd DPDP && yarn dev",
+    "build": "cd DPDP && yarn build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
