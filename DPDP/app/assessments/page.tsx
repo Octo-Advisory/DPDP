@@ -25,7 +25,7 @@ export default async function AssessmentsPage() {
 
     // Create a map for quick organization lookup
     const orgMap = new Map(orgsData.map((o: any) => [o.name, o]));
-    console.log('........');
+    console.log('............');
     // Map to the shape expected by the UI
     const assessments = assessmentsData.map((a: any) => {
         const orgBox = orgMap.get(a.organization);
