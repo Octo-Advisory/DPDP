@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { FrappeClient } from '../../lib/frappe/client';
 
 export default function LoginPage() {
@@ -95,24 +94,26 @@ export default function LoginPage() {
                             />
                         </div>
                         <div className="text-left">
-                            <label htmlFor="password" className="block text-sm font-bold text-slate-700 mb-2">
+                            <label className="block text-sm font-bold text-slate-700 mb-2">
                                 Password
                             </label>
                             <div className="relative">
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-400">
+                                    <Lock className="h-5 w-5" />
+                                </span>
                                 <input
                                     id="password"
-                                    name="password"
-                                    type={showPassword ? "text" : "password"}
+                                    type={showPassword ? 'text' : 'password'}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="block w-full rounded-lg border border-stone-300 px-4 py-3 pr-10 text-slate-900 placeholder-stone-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none transition-all bg-stone-50/30"
+                                    className="block w-full rounded-lg border border-stone-300 pl-10 pr-12 py-3 text-slate-900 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none transition-all bg-stone-50/30"
                                     placeholder="••••••••"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-400 hover:text-stone-600"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-400 hover:text-amber-600"
                                 >
                                     {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                 </button>
@@ -135,6 +136,15 @@ export default function LoginPage() {
                                 'Sign In'
                             )}
                         </button>
+                    </div>
+
+                    <div className="text-center mt-6">
+                        <p className="text-sm text-stone-500 font-medium">
+                            Don't have an account?{' '}
+                            <Link to="/signup" className="font-bold text-amber-600 hover:text-amber-700 transition-colors no-underline">
+                                Sign Up
+                            </Link>
+                        </p>
                     </div>
                 </form>
 
