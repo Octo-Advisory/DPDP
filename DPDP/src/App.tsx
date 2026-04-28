@@ -10,6 +10,8 @@ import OrganizationsPage from './pages/OrganizationsPage';
 import NewOrganization from './pages/NewOrganization';
 import OrganizationDetails from './pages/OrganizationDetails';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import SetPasswordPage from './pages/SetPasswordPage';
 import LandingPage from './pages/LandingPage';
 import './App.css';
 
@@ -26,6 +28,8 @@ function App() {
           
           {/* Auth */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/set-password" element={<SetPasswordPage />} />
           
           {/* Assessment Flow */}
           <Route path="/assessments" element={<AssessmentList />} />

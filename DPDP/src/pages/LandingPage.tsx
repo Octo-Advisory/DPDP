@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipboardCheck, Zap, ShieldCheck } from 'lucide-react';
@@ -55,7 +54,7 @@ export default function LandingPage() {
           </div>
           <div className="px-4 text-center">
             <div className="text-3xl font-bold text-slate-900 font-serif">100%</div>
-            <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mt-1">Local & Secure</div>
+            <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mt-1">SECURE</div>
           </div>
           <div className="px-4 text-center">
             <div className="text-3xl font-bold text-slate-900 font-serif">2025</div>
@@ -65,27 +64,13 @@ export default function LandingPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="grid md:grid-cols-3 gap-10 px-4 pb-20">
-        <div className="p-8 bg-white border border-stone-100 rounded-[2rem] shadow-sm group hover:shadow-xl transition-all duration-500 text-left">
+      <section className="flex justify-center px-4 pb-20">
+        <div className="max-w-md p-8 bg-white border border-stone-100 rounded-[2rem] shadow-sm group hover:shadow-xl transition-all duration-500 text-left">
           <div className="h-14 w-14 bg-stone-50 text-amber-700 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-amber-50">
             <ClipboardCheck className="w-7 h-7" />
           </div>
           <h3 className="text-xl font-bold mb-3 text-slate-800 font-serif">Detailed Questionnaires</h3>
           <p className="text-stone-500 leading-relaxed text-sm">Comprehensive risk-based scale questions covering all 8 pillars of the 2023 Act and 2025 Rules.</p>
-        </div>
-        <div className="p-8 bg-white border border-stone-100 rounded-[2rem] shadow-sm group hover:shadow-xl transition-all duration-500 text-left">
-          <div className="h-14 w-14 bg-stone-50 text-amber-700 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-amber-50">
-            <Zap className="w-7 h-7" />
-          </div>
-          <h3 className="text-xl font-bold mb-3 text-slate-800 font-serif">Automated Scoring</h3>
-          <p className="text-stone-500 leading-relaxed text-sm">Instant "Penalty Exposure" calculation with weighted logic and critical flag overrides.</p>
-        </div>
-        <div className="p-8 bg-white border border-stone-100 rounded-[2rem] shadow-sm group hover:shadow-xl transition-all duration-500 text-left">
-          <div className="h-14 w-14 bg-stone-50 text-amber-700 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-amber-50">
-            <ShieldCheck className="w-7 h-7" />
-          </div>
-          <h3 className="text-xl font-bold mb-3 text-slate-800 font-serif">Secure & Local</h3>
-          <p className="text-stone-500 leading-relaxed text-sm">Zero data leak architecture. Your audit data stays on your local machine.</p>
         </div>
       </section>
     </div>
