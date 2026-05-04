@@ -1,5 +1,5 @@
 import frappe
 from frappe.model.document import Document
 
-class Section_dpdp(Document):
-	pass
+class SectionDpdp(Document):
+    pass

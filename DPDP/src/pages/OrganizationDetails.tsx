@@ -107,7 +107,8 @@ export default function OrganizationDetails() {
                         type="text"
                         required
                         defaultValue={org.organization_name || org.name}
-                        className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-amber-500 outline-none transition-all"
+                        disabled
+                        className="w-full bg-stone-100 border border-stone-200 rounded-xl px-4 py-3 text-slate-500 cursor-not-allowed outline-none transition-all"
                     />
                 </div>
 
@@ -117,7 +118,8 @@ export default function OrganizationDetails() {
                         <select
                             name="industry"
                             defaultValue={org.industry}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none"
+                            disabled
+                            className="w-full bg-stone-100 border border-stone-200 rounded-xl px-4 py-3 text-slate-500 cursor-not-allowed outline-none transition-all appearance-none"
                         >
                             <option>Technology</option>
                             <option>Finance</option>
@@ -132,7 +134,8 @@ export default function OrganizationDetails() {
                         <select
                             name="country"
                             defaultValue={org.country || org.geography}
-                            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none"
+                            disabled
+                            className="w-full bg-stone-100 border border-stone-200 rounded-xl px-4 py-3 text-slate-500 cursor-not-allowed outline-none transition-all appearance-none"
                         >
                             <option>India</option>
                             <option>USA</option>
@@ -148,12 +151,9 @@ export default function OrganizationDetails() {
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-6 border-t border-stone-100 mt-2">
+                <div className="flex justify-start items-center pt-6 border-t border-stone-100 mt-2">
                     <button type="button" onClick={() => navigate(-1)} className="text-stone-500 hover:text-slate-800 text-sm font-bold transition-colors flex items-center gap-1 px-2">
-                        <ArrowLeft className="w-4 h-4" /> Back
-                    </button>
-                    <button type="submit" disabled={saving} className="bg-slate-900 text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow-lg hover:shadow-xl hover:bg-slate-800 transition-all disabled:opacity-50">
-                        {saving ? <span className="flex items-center gap-2"><Loader2 className="animate-spin w-4 h-4" /> Saving...</span> : 'Save Changes'}
+                        <ArrowLeft className="w-4 h-4" /> Back to Organizations
                     </button>
                 </div>
             </form>

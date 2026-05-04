@@ -291,12 +291,15 @@
 //     );
 // }
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { FrappeClient } from '../../lib/frappe/client';
 
 export default function Wizard({ assessment }: { assessment: any }) {
+    const navigate = useNavigate();
     const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<string, any>>({});
+    const [submitting, setSubmitting] = useState(false);
     const [calculatedRole, setCalculatedRole] = useState<string | null>(assessment.identified_role || null);
     const [isConfirmed, setIsConfirmed] = useState(!!assessment.identified_role);
     const [flags, setFlags] = useState({
@@ -307,15 +310,17 @@ export default function Wizard({ assessment }: { assessment: any }) {
     const allSections = assessment.version_details?.sections || [];
     const client = new FrappeClient();
 
-    const handleConfirm = async () => {
+    const handleConfirm = async (roleOverride?: string) => {
         try {
+            const finalRole = roleOverride || calculatedRole;
             await client.updateDoc('Assessment_dpdp', assessment.name, {
-                identified_role: calculatedRole,
+                identified_role: finalRole,
                 process_children_data: flags.children ? 1 : 0,
                 has_cross_border_transfers: flags.cross_border ? 1 : 0,
                 status: 'Draft'
             });
             
+            if (roleOverride) setCalculatedRole(roleOverride);
             setIsConfirmed(true);
             setCurrentSectionIndex(0); 
         } catch (error: any) {
@@ -344,8 +349,8 @@ export default function Wizard({ assessment }: { assessment: any }) {
                 return q1Val === 'Not sure';
             }
             
-            // "Applicability" visible if ANY selection is made
-            if (section.title === 'Applicability') {
+            // "Applicability Questions" visible if ANY selection is made
+            if (section.title === 'Applicability Questions') {
                 return !!q1Val;
             }
 
@@ -381,6 +386,25 @@ export default function Wizard({ assessment }: { assessment: any }) {
     const handleAnswer = (question: any, value: any) => {
         const questionId = question.id || question.name;
         setAnswers(prev => {
+            // Check if already selected (deselect)
+            if (prev[questionId]?.value === value) {
+                const newAnswers = { ...prev };
+                delete newAnswers[questionId];
+
+                // Reset role/flags if necessary
+                if (question.updates_role) {
+                    setCalculatedRole(null);
+                }
+                if (question.updates_flag === 'process_children_data') {
+                    setFlags(f => ({ ...f, children: false }));
+                }
+                if (question.updates_flag === 'cross_border_transfer') {
+                    setFlags(f => ({ ...f, cross_border: false }));
+                }
+
+                return newAnswers;
+            }
+
             const newAnswers = { ...prev, [questionId]: { value: value } };
             
             if (question.updates_role) {
@@ -388,10 +412,10 @@ export default function Wizard({ assessment }: { assessment: any }) {
             }
 
             if (question.updates_flag === 'process_children_data') {
-                setFlags(f => ({ ...f, children: value?.startsWith('A.') || false }));
+                setFlags(f => ({ ...f, children: value?.startsWith('A.') || value === 'Yes' || false }));
             }
             if (question.updates_flag === 'cross_border_transfer') {
-                setFlags(f => ({ ...f, cross_border: value?.startsWith('A.') || false }));
+                setFlags(f => ({ ...f, cross_border: value?.startsWith('A.') || value === 'Yes' || false }));
             }
 
             return newAnswers;
@@ -407,14 +431,14 @@ export default function Wizard({ assessment }: { assessment: any }) {
     }
 
     return (
-        <div className="flex h-screen bg-white">
-            <div className="w-80 bg-slate-50 border-r border-slate-200 flex flex-col h-full overflow-hidden shrink-0">
+        <div className="flex bg-white">
+            <div className="w-80 bg-slate-50 border-r border-slate-200 flex flex-col shrink-0">
                 <div className="p-8 border-b border-slate-200 bg-white">
                     <h2 className="text-xl font-serif font-bold text-slate-900 leading-none">Assessment</h2>
                     <p className="text-[10px] text-slate-400 mt-2 font-bold tracking-widest uppercase">Navigation</p>
                 </div>
                 
-                <div className="flex-1 overflow-y-auto p-3 space-y-1 text-left scrollbar-thin">
+                <div className="p-3 space-y-1 text-left">
                     {sections.map((section: any, idx: number) => {
                         const isCurrent = currentSection?.name === section.name;
 
@@ -438,7 +462,7 @@ export default function Wizard({ assessment }: { assessment: any }) {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col relative overflow-hidden">
+            <div className="flex-1 flex flex-col relative">
                 <header className="h-16 bg-white border-b border-slate-100 px-10 flex items-center justify-between z-10 shrink-0">
                     <div>
                         <span className="text-[9px] font-bold text-slate-400 tracking-widest uppercase block mb-0.5">Framework: DPDP</span>
@@ -446,7 +470,7 @@ export default function Wizard({ assessment }: { assessment: any }) {
                     </div>
                 </header>
 
-                <main className="flex-1 overflow-y-auto px-10 py-10 scrollbar-thin">
+                <main className="flex-1 px-10 py-10">
                     <div className="max-w-2xl mx-auto space-y-12 pb-24">
                         {currentSection.questions && currentSection.questions.map((question: any, qIdx: number) => {
                             const options = JSON.parse(question.options || '[]');
@@ -539,40 +563,104 @@ export default function Wizard({ assessment }: { assessment: any }) {
                             })
                         );
 
-                        return (!isConfirmed && currentSection.title === 'Applicability') ? (
+                        const isLastDiscoverySection = !isConfirmed && currentSectionIndex === sections.length - 1;
+
+                        return isLastDiscoverySection ? (
                             <button 
-                                onClick={handleConfirm}
+                                onClick={async () => {
+                                    let roleToConfirm = calculatedRole;
+                                    
+                                    // Always re-calculate if missing or if we want to be sure
+                                    const rcSection = allSections.find((s: any) => s.title === 'Role Clarification');
+                                    if (rcSection && rcSection.questions?.length >= 1) {
+                                        const q1 = answers[rcSection.questions[0].name]?.value || answers[rcSection.questions[0].id]?.value;
+                                        if (q1) {
+                                            const q2 = answers[rcSection.questions[1]?.name]?.value || answers[rcSection.questions[1]?.id]?.value;
+                                            const q3 = answers[rcSection.questions[2]?.name]?.value || answers[rcSection.questions[2]?.id]?.value;
+                                            const q4 = answers[rcSection.questions[3]?.name]?.value || answers[rcSection.questions[3]?.id]?.value;
+                                            
+                                            const isA = (v: any) => v && (String(v).startsWith('A.') || String(v) === 'Yes');
+                                            const isB = (v: any) => v && (String(v).startsWith('B.') || String(v) === 'No');
+                                            
+                                            if (isA(q1) && (isA(q4) || (q4 && String(q4).includes('Possibly')))) {
+                                                roleToConfirm = 'Significant Data Fiduciary';
+                                            } else if (isA(q1)) {
+                                                roleToConfirm = 'Data Fiduciary';
+                                            } else if (isB(q1)) {
+                                                roleToConfirm = 'Data Processor';
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Default to Data Fiduciary if still nothing
+                                    if (!roleToConfirm) roleToConfirm = 'Data Fiduciary';
+                                    
+                                    handleConfirm(roleToConfirm);
+                                }}
                                 disabled={!isDiscoveryComplete}
                                 className="flex items-center gap-2 px-10 py-3 rounded-xl font-bold bg-amber-600 text-white hover:bg-amber-700 transition-all shadow-lg active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
                             >
-                                Confirm Selection <ChevronRight className="w-5 h-5" />
+                                Confirm Choices <ChevronRight className="w-5 h-5" />
                             </button>
                         ) : (
                             <button 
-                                onClick={() => {
+                                onClick={async () => {
                                     if (currentSection.title === 'Role Clarification') {
-                                        const role = (() => {
-                                            const rcSection = allSections.find((s: any) => s.title === 'Role Clarification');
-                                            if (!rcSection) return null;
+                                        const rcSection = allSections.find((s: any) => s.title === 'Role Clarification');
+                                        if (rcSection && rcSection.questions?.length >= 4) {
                                             const q1 = answers[rcSection.questions[0].name]?.value;
                                             const q2 = answers[rcSection.questions[1].name]?.value;
                                             const q3 = answers[rcSection.questions[2].name]?.value;
                                             const q4 = answers[rcSection.questions[3].name]?.value;
                                             const isA = (v: string) => v?.startsWith('A.');
                                             const isB = (v: string) => v?.startsWith('B.');
-                                            if (isA(q1) && (isA(q4) || isB(q4))) return 'Significant Data Fiduciary';
-                                            if (isA(q1)) return 'Data Fiduciary';
-                                            if (isB(q1) && (isA(q2) || isB(q2)) && (isA(q3) || isB(q3))) return 'Data Processor';
-                                            return 'Data Fiduciary'; 
-                                        })();
-                                        if (role) setCalculatedRole(role);
+                                            
+                                            let role = 'Data Fiduciary';
+                                            if (isA(q1) && (isA(q4) || q4?.includes('Possibly'))) {
+                                                role = 'Significant Data Fiduciary';
+                                            } else if (isA(q1)) {
+                                                role = 'Data Fiduciary';
+                                            } else if (isB(q1) && (isA(q2) || isB(q2)) && (isA(q3) || isB(q3))) {
+                                                role = 'Data Processor';
+                                            }
+                                            setCalculatedRole(role);
+                                        }
+                                    }
+
+                                    if (currentSectionIndex === sections.length - 1) {
+                                        setSubmitting(true);
+                                        try {
+                                            await client.call('dpdp_compliance.api.submit_assessment', {
+                                                assessment_name: assessment.name,
+                                                answers: answers
+                                            });
+                                            navigate(`/assessments/${assessment.name}/results`);
+                                        } catch (error: any) {
+                                            console.error(error);
+                                            alert(error.message || 'Failed to submit assessment.');
+                                        } finally {
+                                            setSubmitting(false);
+                                        }
+                                        return;
                                     }
                                     handleNext();
                                 }} 
-                                disabled={currentSectionIndex === sections.length - 1 || !isAllAnswered} 
-                                className="flex items-center gap-2 px-10 py-3 rounded-xl font-bold bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg active:scale-95"
+                                disabled={currentSectionIndex === sections.length - 1 && !isAllAnswered} 
+                                className={`flex items-center gap-2 px-10 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 ${
+                                    currentSectionIndex === sections.length - 1
+                                    ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                                    : 'bg-slate-900 text-white hover:bg-slate-800'
+                                } disabled:opacity-30 disabled:cursor-not-allowed`}
                             >
-                                Next Section <ChevronRight className="w-5 h-5" />
+                                {currentSectionIndex === sections.length - 1 ? (
+                                    <>
+                                        {submitting ? 'Calculating Score...' : 'Submit Assessment'} <ChevronRight className="w-5 h-5" />
+                                    </>
+                                ) : (
+                                    <>
+                                        Next Section <ChevronRight className="w-5 h-5" />
+                                    </>
+                                )}
                             </button>
                         );
                     })()}

@@ -11,7 +11,7 @@
     "istable": 0,
     "editable_grid": 0,
     "track_changes": 0,
-    "module": "Core",
+    "module": "dpdp",
     "naming_rule": "",
     "sort_field": "modified",
     "sort_order": "DESC",

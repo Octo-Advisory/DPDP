@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import SetPasswordPage from './pages/SetPasswordPage';
 import LandingPage from './pages/LandingPage';
+import ResultsPage from './pages/ResultsPage';
 import './App.css';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/assessments" element={<AssessmentList />} />
           <Route path="/assessments/new" element={<NewAssessment />} />
           <Route path="/assessments/:id" element={<AssessmentPage />} />
+          <Route path="/assessments/:id/results" element={<ResultsPage />} />
           
           {/* Organization Flow */}
           <Route path="/organizations" element={<OrganizationsPage />} />

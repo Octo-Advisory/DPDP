@@ -163,9 +163,12 @@ code {
   background: #cbd5e1;
 }
 
-/* Ensure no root scroll if not needed */
+/* Allow global scrolling - only one scrollbar for the whole page */
 html, body {
   overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100%;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
