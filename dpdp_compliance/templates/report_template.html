@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: "Helvetica", "Arial", sans-serif;
+            color: #1e293b;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #0f172a;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            margin: 5px 0 0;
+            color: #64748b;
+            font-size: 14px;
+            text-transform: uppercase;
+            tracking: 1px;
+        }
+        .summary-box {
+            display: flex;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #e2e8f0;
+        }
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 10px solid #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 40px;
+        }
+        .score-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #059669;
+        }
+        .status-info h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+        .status-info p {
+            margin: 0;
+            color: #64748b;
+            max-width: 400px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            border-left: 4px solid #d97706;
+            padding-left: 15px;
+            margin: 30px 0 20px;
+            color: #0f172a;
+        }
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .category-table td {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .category-name {
+            font-weight: 500;
+        }
+        .category-score {
+            text-align: right;
+            font-weight: bold;
+            color: #0f172a;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #059669;
+        }
+        .gap-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff9f2;
+            border-left: 4px solid #f97316;
+            border-radius: 4px;
+        }
+        .gap-question {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .gap-impact {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #c2410c;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 10px;
+            color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>DPDP Compliance Assessment Report</h1>
+        <p>Organization: {{ organization }} | Date: {{ date }}</p>
+    </div>
+
+    <div class="summary-box">
+        <div class="score-circle">
+            <span class="score-text">{{ overall_score }}%</span>
+        </div>
+        <div class="status-info">
+            <h2>{{ status_title }}</h2>
+            <p>{{ status_message }}</p>
+            <p style="margin-top: 10px; font-weight: bold; color: #0f172a;">Identified Role: {{ role }}</p>
+        </div>
+    </div>
+
+    <div class="section-title">Compliance Breakdown by Category</div>
+    <table class="category-table">
+        {% for category, score in section_scores.items() %}
+        <tr>
+            <td>
+                <div class="category-name">{{ category }}</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ score }}%;"></div>
+                </div>
+            </td>
+            <td class="category-score" style="width: 60px;">{{ score }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if gaps %}
+    <div class="section-title" style="border-left-color: #ef4444;">Critical Gaps & Required Actions</div>
+    {% for gap in gaps %}
+    <div class="gap-item">
+        <span class="gap-question">{{ gap.question }}</span>
+        <span class="gap-impact">Risk Level: {{ gap.impact }}</span>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="footer">
+        This report is generated based on the Digital Personal Data Protection (DPDP) Readiness Assessment framework.<br>
+        Confidential Assessment Result - Generated on {{ date }}
+    </div>
+</body>
+</html>

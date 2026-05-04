@@ -46,14 +46,16 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col bg-stone-50 font-sans overflow-x-hidden">
-            <div className="sticky top-0 z-[100] w-full">
+        <div className="min-h-screen flex flex-col bg-stone-50 font-sans">
+            <div className="flex-none z-[100] w-full sticky top-0">
                 <Navbar />
             </div>
-            <main className="flex-grow bg-slate-50 flex flex-col">
+            <main className="flex-grow bg-slate-50">
                 {children}
             </main>
-            <Footer />
+            <div className="flex-none">
+                <Footer />
+            </div>
         </div>
     );
 }

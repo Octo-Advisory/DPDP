@@ -11,7 +11,7 @@
     "istable": 0,
     "editable_grid": 0,
     "track_changes": 0,
-    "module": "Core",
+    "module": "dpdp",
     "naming_rule": "",
     "sort_field": "modified",
     "sort_order": "DESC",
@@ -421,6 +421,18 @@
             "show_on_timeline": 0,
             "make_attachment_public": 0,
             "doctype": "DocField"
+        },
+        {
+            "fieldname": "overall_score",
+            "fieldtype": "Float",
+            "label": "Overall Score",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_scores",
+            "fieldtype": "Small Text",
+            "label": "Section Scores",
+            "read_only": 1
         }
     ]
 }

@@ -31,7 +31,7 @@ export default function AssessmentActions({ assessmentId, status }: { assessment
         <>
             <div className="flex items-center gap-3 justify-end">
                 <button
-                    onClick={() => navigate(`/assessments/${assessmentId}`)}
+                    onClick={() => navigate(`/assessments/${assessmentId}${status === 'COMPLETED' ? '/results' : ''}`)}
                     className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-all shadow-sm active:scale-95"
                     title="Edit Assessment"
                 >

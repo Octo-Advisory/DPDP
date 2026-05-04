@@ -137,13 +137,11 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Assessment_dpdp": {
+        "on_trash": "dpdp_compliance.api.cleanup_assessment_responses"
+    }
+}
 
 # Scheduled Tasks
 # ---------------

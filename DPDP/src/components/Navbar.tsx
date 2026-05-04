@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
+    const location = useLocation();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -29,6 +30,10 @@ export default function Navbar() {
         }
     };
 
+    // Regex to hide nav links on the assessment questionnaire page (/assessments/:id)
+    // but keep them on /assessments (list) and /assessments/:id/results (report)
+    const isAssessmentFlow = /^\/assessments\/[^/]+$/.test(location.pathname) && !location.pathname.endsWith('/new');
+
     return (
         <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 transition-all duration-300">
             <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
@@ -37,28 +42,32 @@ export default function Navbar() {
                 </Link>
 
                 <nav className="flex gap-8 items-center">
-                    {isLoggedIn && (
+                    {!isAssessmentFlow && (
                         <>
-                            <Link to="/assessments" className="text-sm font-medium text-slate-600 hover:text-amber-700 hover:bg-amber-50 px-3 py-2 rounded-md transition-all">Assessments</Link>
-                            <Link to="/organizations" className="text-sm font-medium text-slate-600 hover:text-amber-700 hover:bg-amber-50 px-3 py-2 rounded-md transition-all">Organizations</Link>
-                            <div className="h-5 w-px bg-slate-200 mx-2" />
-                        </>
-                    )}
+                            {isLoggedIn && (
+                                <>
+                                    <Link to="/assessments" className="text-sm font-medium text-slate-600 hover:text-amber-700 hover:bg-amber-50 px-3 py-2 rounded-md transition-all">Assessments</Link>
+                                    <Link to="/organizations" className="text-sm font-medium text-slate-600 hover:text-amber-700 hover:bg-amber-50 px-3 py-2 rounded-md transition-all">Organizations</Link>
+                                    <div className="h-5 w-px bg-slate-200 mx-2" />
+                                </>
+                            )}
 
-                    {isLoggedIn ? (
-                        <button
-                            onClick={handleSignOut}
-                            className="text-sm font-bold text-slate-900 hover:text-amber-700 transition-colors"
-                        >
-                            Sign Out
-                        </button>
-                    ) : (
-                        <Link
-                            to="/login"
-                            className="text-sm font-bold text-slate-900 hover:text-amber-700 transition-colors no-underline"
-                        >
-                            Sign In
-                        </Link>
+                            {isLoggedIn ? (
+                                <button
+                                    onClick={handleSignOut}
+                                    className="text-sm font-bold text-slate-900 hover:text-amber-700 transition-colors"
+                                >
+                                    Sign Out
+                                </button>
+                            ) : (
+                                <Link
+                                    to="/login"
+                                    className="text-sm font-bold text-slate-900 hover:text-amber-700 transition-colors no-underline"
+                                >
+                                    Sign In
+                                </Link>
+                            )}
+                        </>
                     )}
                 </nav>
             </div>

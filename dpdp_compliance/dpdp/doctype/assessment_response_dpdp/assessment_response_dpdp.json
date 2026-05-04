@@ -1,0 +1,51 @@
+{
+    "name": "Assessment_Response_dpdp",
+    "module": "dpdp",
+    "doctype": "DocType",
+    "issingle": 0,
+    "istable": 0,
+    "editable_grid": 1,
+    "custom": 1,
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "report": 1,
+            "export": 1,
+            "share": 1
+        }
+    ],
+    "fields": [
+        {
+            "fieldname": "assessment",
+            "fieldtype": "Link",
+            "label": "Assessment",
+            "options": "Assessment_dpdp",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "question",
+            "fieldtype": "Link",
+            "label": "Question",
+            "options": "Question_dpdp",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "response_value",
+            "fieldtype": "Data",
+            "label": "Response Value",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "score",
+            "fieldtype": "Float",
+            "label": "Score",
+            "in_list_view": 1
+        }
+    ]
+}
