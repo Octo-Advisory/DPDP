@@ -2,11 +2,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FrappeClient } from '../../lib/frappe/client';
+import CountryPicker from '../components/CountryPicker';
 
 export default function NewOrganization() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [countries, setCountries] = useState<any[]>([]);
+    const [selectedCountry, setSelectedCountry] = useState("");
     const client = new FrappeClient();
+
+    React.useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                // Fetch both name and code for the flag display
+                const list = await client.getList('Country', undefined, ['name', 'code'], 300);
+                const sorted = list.sort((a: any, b: any) => a.name.localeCompare(b.name));
+                setCountries(sorted);
+            } catch (error) {
+                console.error('Failed to fetch countries:', error);
+            }
+        };
+        fetchCountries();
+    }, []);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -17,7 +34,7 @@ export default function NewOrganization() {
             await client.createDoc('Organization_dpdp', {
                 organization_name: formData.get('name'),
                 industry: formData.get('industry'),
-                country: formData.get('country'),
+                country: selectedCountry || formData.get('country'),
             });
             navigate('/organizations');
         } catch (error: any) {
@@ -57,18 +74,12 @@ export default function NewOrganization() {
                     </div>
                     <div className="space-y-2">
                         <label className="block text-sm font-bold text-slate-800 uppercase tracking-widest">Country</label>
-                        <select name="country" className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-slate-900 focus:ring-2 focus:ring-amber-500 outline-none transition-all appearance-none">
-                            <option>India</option>
-                            <option>USA</option>
-                            <option>United Kingdom</option>
-                            <option>Canada</option>
-                            <option>Australia</option>
-                            <option>Germany</option>
-                            <option>France</option>
-                            <option>Singapore</option>
-                            <option>UAE</option>
-                            <option>Other</option>
-                        </select>
+                        <CountryPicker 
+                            countries={countries} 
+                            value={selectedCountry} 
+                            onChange={setSelectedCountry}
+                            placeholder="Search and select country"
+                        />
                     </div>
                 </div>
 
