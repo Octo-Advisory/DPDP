@@ -1,9 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Trash2, ArrowLeft, Loader2 } from 'lucide-react';
+import { Trash2, ArrowLeft } from 'lucide-react';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { FrappeClient } from '../../lib/frappe/client';
+import CountryPicker from '../components/CountryPicker';
 
 export default function OrganizationDetails() {
     const { id } = useParams();
@@ -14,7 +15,22 @@ export default function OrganizationDetails() {
     const [deleting, setDeleting] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     
+    const [countries, setCountries] = useState<any[]>([]);
+    
     const client = new FrappeClient();
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const list = await client.getList('Country', undefined, ['name', 'code'], 300);
+                const sorted = list.sort((a: any, b: any) => a.name.localeCompare(b.name));
+                setCountries(sorted);
+            } catch (error) {
+                console.error('Failed to fetch countries:', error);
+            }
+        };
+        fetchCountries();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -131,23 +147,12 @@ export default function OrganizationDetails() {
                     </div>
                     <div className="space-y-2">
                         <label className="block text-sm font-bold text-slate-800 uppercase tracking-widest">Country</label>
-                        <select
-                            name="country"
-                            defaultValue={org.country || org.geography}
-                            disabled
-                            className="w-full bg-stone-100 border border-stone-200 rounded-xl px-4 py-3 text-slate-500 cursor-not-allowed outline-none transition-all appearance-none"
-                        >
-                            <option>India</option>
-                            <option>USA</option>
-                            <option>United Kingdom</option>
-                            <option>Canada</option>
-                            <option>Australia</option>
-                            <option>Germany</option>
-                            <option>France</option>
-                            <option>Singapore</option>
-                            <option>UAE</option>
-                            <option>Other</option>
-                        </select>
+                        <CountryPicker 
+                            countries={countries} 
+                            value={org.country || org.geography} 
+                            disabled={true} 
+                            onChange={() => {}}
+                        />
                     </div>
                 </div>
 
