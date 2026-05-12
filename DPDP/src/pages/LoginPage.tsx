@@ -11,7 +11,7 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const client = new FrappeClient();
-
+    // hi
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setError('');
