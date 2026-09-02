@@ -1,5 +1,5 @@
 import frappe
 from frappe.model.document import Document
 
-class AssessmentResponseDpdp(Document):
+class Assessment_Response_dpdp(Document):
     pass

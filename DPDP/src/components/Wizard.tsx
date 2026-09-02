@@ -586,7 +586,7 @@ export default function Wizard({ assessment }: { assessment: any }) {
                                                 roleToConfirm = 'Significant Data Fiduciary';
                                             } else if (isA(q1)) {
                                                 roleToConfirm = 'Data Fiduciary';
-                                            } else if (isB(q1)) {
+                                            } else if (isB(q1) && (isA(q2) || isB(q2)) && (isA(q3) || isB(q3))) {
                                                 roleToConfirm = 'Data Processor';
                                             }
                                         }
@@ -645,7 +645,7 @@ export default function Wizard({ assessment }: { assessment: any }) {
                                     }
                                     handleNext();
                                 }} 
-                                disabled={currentSectionIndex === sections.length - 1 && !isAllAnswered} 
+                                disabled={currentSectionIndex === sections.length - 1 || !isAllAnswered}
                                 className={`flex items-center gap-2 px-10 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95 ${
                                     currentSectionIndex === sections.length - 1
                                     ? 'bg-emerald-600 text-white hover:bg-emerald-700'
